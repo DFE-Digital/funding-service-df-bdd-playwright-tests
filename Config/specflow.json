@@ -1,0 +1,10 @@
+{
+  "generator": {
+    "generateParallelCodeForNUnit": true,
+    "generateAsyncTests": true
+  },
+  "runtime": {
+    "testThreadCount": 4,
+    "executionOrder": "parallel"
+  }
+}

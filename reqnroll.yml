@@ -1,0 +1,56 @@
+﻿trigger:
+- main   # change branch if needed
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  buildConfiguration: 'Release'
+
+steps:
+
+# ✅ Install .NET 8 SDK
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '8.0.x'
+
+# ✅ Debug info (optional but useful)
+- script: dotnet --info
+  displayName: 'Show .NET Info'
+
+# ✅ Restore NuGet packages
+- script: dotnet restore
+  displayName: 'Restore'
+
+# ✅ Build solution/project
+- script: dotnet build --configuration $(buildConfiguration)
+  displayName: 'Build'
+
+# ✅ Install Playwright browsers (REQUIRED ✅)
+- script: |
+    pwsh ./bin/$(buildConfiguration)/net8.0/playwright.ps1 install
+  displayName: 'Install Playwright Browsers'
+
+# ✅ Run filtered tests (SpecFlow tag)
+- script: |
+    dotnet test DigitalForm_AutomationSuite.csproj`
+    --configuration $(buildConfiguration) `
+    --filter "TestCategory=Pipelinetest" `
+    --logger "trx;LogFileName=test-results.trx"
+  displayName: 'Run Playwright Tests (Filtered)'
+
+# ✅ Publish test results to Azure DevOps
+- task: PublishTestResults@2
+  inputs:
+    testResultsFiles: '**/*.trx'
+    testRunTitle: 'Playwright Test Results'
+
+# ✅ Publish Extent Report ✅
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathToPublish: 'TestResults'   # update if your folder differs
+    artifactName: 'ExtentReport'
+    publishLocation: 'Container'
+  displayName: 'Publish Extent Report'
+

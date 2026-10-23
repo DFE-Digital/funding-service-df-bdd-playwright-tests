@@ -1,0 +1,90 @@
+# End-to-End pipeline
+
+name: Playwright_$(Date:yyyyMMdd)$(Rev:.r)
+
+trigger: none
+
+jobs:
+- job: End_to_End
+  displayName: 'Run Playwright E2E Tests'
+  timeoutInMinutes: 60
+
+  pool:
+    vmImage: 'windows-latest'
+
+  variables:
+    BuildConfiguration: 'Release'
+    ProjectPath: 'DigitalForm_Automation/DigitalForm_AutomationSuite.csproj'
+    WorkingDirectory: 'DigitalForm_Automation'
+
+  steps:
+
+  - checkout: self
+    clean: true
+    fetchDepth: 1
+
+  - task: UseDotNet@2
+    displayName: 'Use .NET 8 SDK'
+    inputs:
+      packageType: 'sdk'
+      version: '8.0.x'
+
+  # Restore
+  - task: DotNetCoreCLI@2
+    displayName: 'Restore NuGet packages'
+    inputs:
+      command: 'restore'
+      projects: '$(ProjectPath)'
+
+  # Build
+  - task: DotNetCoreCLI@2
+    displayName: 'Build solution'
+    inputs:
+      command: 'build'
+      projects: '$(ProjectPath)'
+      arguments: >
+        --configuration $(BuildConfiguration)
+        --no-restore
+  
+  # Cache Playwright browsers
+  - task: Cache@2
+    displayName: 'Cache Playwright browsers'
+    inputs:
+      key: 'playwright | "$(Agent.OS)"'
+      path: '$(USERPROFILE)\AppData\Local\ms-playwright'
+
+  # Install Playwright browsers
+  - pwsh: |
+      .\bin\$(BuildConfiguration)\net8.0\playwright.ps1 install --with-deps
+    displayName: 'Install Playwright browsers'
+    workingDirectory: '$(WorkingDirectory)'
+
+  # Run tests
+  - task: DotNetCoreCLI@2
+    displayName: 'Run Playwright tests'
+    inputs:
+      command: 'test'
+      projects: '$(ProjectPath)'
+      arguments: >
+        --configuration $(BuildConfiguration)
+        --filter TestCategory=Pipelinedev
+        --logger "trx;LogFileName=TestResults.trx"
+        --no-build
+
+  # Publish test results
+  - task: PublishTestResults@2
+    displayName: 'Publish test results'
+    condition: always()
+    inputs:
+      testResultsFormat: 'VSTest'
+      testResultsFiles: '**/*.trx'
+      failTaskOnFailedTests: true
+
+  # Publish TestResults folder if it exists
+  - task: PublishPipelineArtifact@1
+    displayName: 'Publish TestResults'
+    condition: always()
+    continueOnError: true
+    inputs:
+      targetPath: '$(Build.SourcesDirectory)/DigitalForm_Automation/TestResults'
+      artifact: 'playwright-results'

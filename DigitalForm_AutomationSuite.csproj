@@ -1,0 +1,49 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="data\**" />
+    <Compile Remove="Drivers\**" />
+    <Compile Remove="Support\**" />
+    <EmbeddedResource Remove="data\**" />
+    <EmbeddedResource Remove="Drivers\**" />
+    <EmbeddedResource Remove="Support\**" />
+    <None Remove="data\**" />
+    <None Remove="Drivers\**" />
+    <None Remove="Support\**" />
+    <ReqnrollFeatureFiles Remove="data\**" />
+    <ReqnrollFeatureFiles Remove="Drivers\**" />
+    <ReqnrollFeatureFiles Remove="Support\**" />
+    <ReqnrollObsoleteCodeBehindFiles Remove="data\**" />
+    <ReqnrollObsoleteCodeBehindFiles Remove="Drivers\**" />
+    <ReqnrollObsoleteCodeBehindFiles Remove="Support\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+	  <PackageReference Include="Bogus" Version="35.6.5" />
+	  <PackageReference Include="Deque.AxeCore.Commons" Version="4.10.1" />
+	  <PackageReference Include="Deque.AxeCore.Playwright" Version="4.10.1" />
+	  <PackageReference Include="ExtentReports" Version="5.0.4" />
+	  <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.0" />
+	  <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="10.0.0" />
+	  <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="10.0.0" />
+	  <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.0" />
+	  <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+	  <PackageReference Include="Microsoft.Playwright" Version="1.54.0" />
+	  <PackageReference Include="Microsoft.Playwright.NUnit" Version="1.46.0" />
+	  <PackageReference Include="NUnit" Version="3.13.3" />
+	  <PackageReference Include="NUnit3TestAdapter" Version="5.1.0" />
+	  <PackageReference Include="NUnit.Analyzers" Version="3.3.0" />
+	  <PackageReference Include="coverlet.collector" Version="3.1.2" />
+	  <PackageReference Include="Reqnroll" Version="3.0.0" />
+	  <PackageReference Include="Reqnroll.NUnit" Version="3.0.0" />
+	  <PackageReference Include="Reqnroll.SpecFlowCompatibility" Version="3.0.0" />
+
+  </ItemGroup>
+
+</Project>

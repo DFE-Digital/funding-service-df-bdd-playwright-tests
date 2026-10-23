@@ -1,0 +1,88 @@
+{
+  "metadata": {
+  },
+  "startPage": "/first-page",
+  "pages": [
+    {
+      "title": "First page",
+      "path": "/first-page",
+      "components": [
+      ],
+      "next": [
+        {
+          "path": "/second-page"
+        }
+      ]
+    },
+    {
+      "title": "Second page",
+      "path": "/second-page",
+      "components": [
+        {
+          "name": "Scogod",
+          "options": {
+          },
+          "type": "Details",
+          "title": "details",
+          "schema": {
+          },
+          "values": {
+          },
+          "content": "details"
+        },
+        {
+          "name": "vHmMqD",
+          "type": "Html",
+          "content": "html"
+        }
+      ],
+      "next": [
+        {
+          "path": "/summary"
+        }
+      ]
+    },
+    {
+      "title": "Summary",
+      "path": "/summary",
+      "components": [
+      ],
+      "next": [
+      ],
+      "controller": "./pages/summary.js"
+    }
+  ],
+  "lists": [
+  ],
+  "sections": [
+  ],
+  "conditions": [
+  ],
+  "fees": [
+  ],
+  "outputs": [
+  ],
+  "version": 2,
+  "userId": "e0f075bd-c94c-49c1-9944-c391c8b4a356",
+  "createdBy": "Marneni Saseelya",
+  "id": "n5msi0dc9a",
+  "key": "n5msi0dc9a",
+  "displayName": "testform110424 MS1",
+  "name": "testform110424 MS1",
+  "lastModified": "4/11/2024 9:49:10 AM",
+  "formStatus": "In development",
+  "lastUpdatedByName": "Marneni Saseelya",
+  "lastUpdatedById": "e0f075bd-c94c-49c1-9944-c391c8b4a356",
+  "file": "",
+  "importedDataSets": [
+  ],
+  "designedDataSets": [
+  ],
+  "documents": [
+  ],
+  "calculations": [
+  ],
+  "tabs": [
+  ],
+  "lastDownloaded": "2024/04/11, 9:49:13 am"
+}
